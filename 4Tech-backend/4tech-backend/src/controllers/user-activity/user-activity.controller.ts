@@ -38,6 +38,6 @@ export class UserActivityController {
 	}
 	@Put('like-or-dislike')
 	likeOrDistlikeUserActivity(@Body() LikeOrDislikeViewModel: LikeOrDislikeViewModel){
-
+		return this.userActivityService.likeOrDislikeUserActivity(LikeOrDislikeViewModel);
 	}
 }

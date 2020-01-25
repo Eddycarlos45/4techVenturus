@@ -15,14 +15,14 @@ export class UserService {
 
 	}
 
-	async updateUser(userId: string, newUser: UserViewModel) {
-		const id = Model.findOneAndUpdate(
-			userId,
-			this.userActivityDto,
-			{ new: true }
-		);
-		return this.userRepository.updateUser(newUser);
-	}
+	// async updateUser(userId: string, newUser: UserViewModel) {
+	// 	const id = Model.findOneAndUpdate(
+	// 		userId,
+	// 		newUser,
+	// 		{ new: true }
+	// 	);
+	// 	return this.userRepository.updateUser(newUser);
+	// }
 
 	getUsers() {
 		return this.userRepository.getUsers();

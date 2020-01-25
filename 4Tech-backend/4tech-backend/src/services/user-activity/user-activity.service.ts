@@ -7,6 +7,7 @@ import { UserActivity } from 'src/domain/schemas/user-activity.schema';
 import { readFileSync } from 'fs';
 import { LikeOrDislikeViewModel } from 'src/domain/like-or-dislike.viewmodel';
 import { identity } from 'rxjs';
+import { SSL_OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION } from 'constants';
 
 @Injectable()
 export class UserActivityService {
@@ -31,9 +32,15 @@ export class UserActivityService {
 			throw new BadRequestException('An User Activity with the given id does not exist');
 		}
 		const user = await this.userRepository.getById(likeOrDislikeUserActivity.userId);
-		if(!user){
+		if (!user) {
 			throw new BadRequestException('An User with the given id does not exist')
 		}
+		if (userActivity.likes.includes(user._id.toString())) {
+			userActivity.likes = userActivity.likes.filter(x => x !== user._id.toString());
+		} else {
+			userActivity.likes.push(user._id.toString());
+		}
+		return await this.userActivityRepository.update(userActivity);
 	}
 
 	async uploadImage(userId: string, filename: string, description: string) {

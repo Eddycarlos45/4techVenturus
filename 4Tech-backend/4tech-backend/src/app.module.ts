@@ -31,7 +31,7 @@ import { UserActivityDto } from './domain/dto/user-activity.dto';
     JwtModule.register(
       {
         secret: secretKey, signOptions: {
-          expiresIn: '1m',
+          expiresIn: '600m',
         },
       }),
   ],

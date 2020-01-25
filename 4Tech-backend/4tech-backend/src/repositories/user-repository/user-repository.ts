@@ -12,7 +12,7 @@ export class UserRepositoryService {
 
 	async getById(id: string): Promise<User> {
 		return await this.userCollection
-			.find({ _id: id })
+			.findOne({ _id: id })
 			.lean();
 	}
 	async getByCredentials(userLoginFromViewModel: string, passwordFromViewModel: string){
@@ -33,8 +33,8 @@ export class UserRepositoryService {
 		// this.db.push(newUser);
 		// return 'User sucessfully added';
 	}
-	async updateUser(newUser: UserViewModel) {
-		const user = this.userCollection(newUser);
-		return await user.save();
-	}
+	// async updateUser(newUser: UserViewModel) {
+	// 	const user = this.userCollection(newUser);
+	// 	return await user.save();
+	// }
 }

@@ -18,10 +18,10 @@ export class UserController {
 	criarUsuarios(@Body() newUser: UserViewModel) {
 		return this.userService.createNewUser(newUser);
 	}
-	@Put()
-	updateUsuario(
-		@Param('id') userId: string,
-		@Body() newUser: UserViewModel) {
-		return this.userService.updateUser(userId, newUser);
-	}
+	// @Put()
+	// updateUsuario(
+	// 	@Param('id') userId: string,
+	// 	@Body() newUser: UserViewModel) {
+	// 	return this.userService.updateUser(userId, newUser);
+	// }
 }
