@@ -8,12 +8,14 @@ import { readFileSync } from 'fs';
 import { LikeOrDislikeViewModel } from 'src/domain/like-or-dislike.viewmodel';
 import { identity } from 'rxjs';
 import { SSL_OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION } from 'constants';
+import { WebsocketGateway } from 'src/websocket/websocket.gateway';
 
 @Injectable()
 export class UserActivityService {
 	constructor(
 		private readonly userActivityRepository: UserActivityRepository,
-		private readonly userRepository: UserRepositoryService) {
+		private readonly userRepository: UserRepositoryService,
+		private readonly websocketGateway: WebsocketGateway) {
 
 	}
 
@@ -40,7 +42,10 @@ export class UserActivityService {
 		} else {
 			userActivity.likes.push(user._id.toString());
 		}
-		return await this.userActivityRepository.update(userActivity);
+		const updateUserActivity = await this.userActivityRepository.update(userActivity);
+		this.websocketGateway.notifyOnlike(userActivity._id, userActivity.userId);
+
+		return updateUserActivity;
 	}
 
 	async uploadImage(userId: string, filename: string, description: string) {
