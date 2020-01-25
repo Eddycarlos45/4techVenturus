@@ -1,19 +1,24 @@
 import { Injectable } from '@nestjs/common';
 import { UserViewModel } from 'src/domain/user.viewmodel';
 import { InjectModel } from '@nestjs/mongoose';
-import {Model} from 'mongoose';
-import{User} from 'src/domain/schemas/user.schema';
+import { Model } from 'mongoose';
+import { User } from 'src/domain/schemas/user.schema';
 @Injectable()
 export class UserRepositoryService {
 	constructor(
-		@InjectModel('User') private readonly userCollection: Model<User>){
+		@InjectModel('User') private readonly userCollection: Model<User>) {
 
-		}
+	}
 
+	async getById(id: string): Promise<User> {
+		return await this.userCollection
+			.find({ _id: id })
+			.lean();
+	}
 	async getUsers(): Promise<User[]> {
 		return await this.userCollection
-		.find()
-		.lean();
+			.find()
+			.lean();
 	}
 	async createUser(newUser: UserViewModel) {
 		const user = this.userCollection(newUser);
@@ -21,7 +26,7 @@ export class UserRepositoryService {
 		// this.db.push(newUser);
 		// return 'User sucessfully added';
 	}
-	updateUser(newUser:UserViewModel){
+	updateUser(newUser: UserViewModel) {
 		// this.db.push(newUser);
 		// return 'User update';
 	}
