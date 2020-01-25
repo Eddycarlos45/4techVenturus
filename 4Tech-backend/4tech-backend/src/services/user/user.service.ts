@@ -21,7 +21,7 @@ export class UserService {
 			this.userActivityDto,
 			{ new: true }
 		);
-		return this.userRepository.updateUser(id, newUser);
+		return this.userRepository.updateUser(newUser);
 	}
 
 	getUsers() {

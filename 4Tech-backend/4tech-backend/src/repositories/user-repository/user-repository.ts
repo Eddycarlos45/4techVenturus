@@ -15,9 +15,16 @@ export class UserRepositoryService {
 			.find({ _id: id })
 			.lean();
 	}
+	async getByCredentials(userLoginFromViewModel: string, passwordFromViewModel: string){
+		return await this.userCollection
+		.findOne({userLogin:userLoginFromViewModel,
+		password: passwordFromViewModel})
+		.lean();
+	}
 	async getUsers(): Promise<User[]> {
 		return await this.userCollection
 			.find()
+			.select({ __v: false, password: false })
 			.lean();
 	}
 	async createUser(newUser: UserViewModel) {
@@ -26,7 +33,8 @@ export class UserRepositoryService {
 		// this.db.push(newUser);
 		// return 'User sucessfully added';
 	}
-	updateUser(userId: string, newUser: UserViewModel) {
-		const findId = this.getById(userId);
+	async updateUser(newUser: UserViewModel) {
+		const user = this.userCollection(newUser);
+		return await user.save();
 	}
 }

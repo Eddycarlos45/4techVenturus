@@ -10,6 +10,11 @@ export class UserActivityRepository {
 		@InjectModel('UserActivity') private readonly userActivityCollection: Model<UserActivity>) {
 	}
 
+	async getById(id: string) {
+		return await this.userActivityCollection
+			.findOne({ _id: id })
+			.lean();
+	}
 	async getPaged(index: number) {
 		return await this.userActivityCollection
 			.find()

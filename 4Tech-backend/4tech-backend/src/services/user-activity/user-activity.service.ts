@@ -5,6 +5,8 @@ import { UserActivityDto } from 'src/domain/dto/user-activity.dto';
 import { UserActivityRepository } from 'src/repositories/user-activity-repository/user-activity.repository';
 import { UserActivity } from 'src/domain/schemas/user-activity.schema';
 import { readFileSync } from 'fs';
+import { LikeOrDislikeViewModel } from 'src/domain/like-or-dislike.viewmodel';
+import { identity } from 'rxjs';
 
 @Injectable()
 export class UserActivityService {
@@ -21,6 +23,17 @@ export class UserActivityService {
 		}
 		const recentsUploads = await this.userActivityRepository.getPaged(indexAsNumber);
 		return this.convertimagesToBase64(recentsUploads);
+	}
+
+	async likeOrDislikeUserActivity(likeOrDislikeUserActivity: LikeOrDislikeViewModel) {
+		const userActivity = await this.userActivityRepository.getById(likeOrDislikeUserActivity.userActivityId);
+		if (!userActivity) {
+			throw new BadRequestException('An User Activity with the given id does not exist');
+		}
+		const user = await this.userRepository.getById(likeOrDislikeUserActivity.userId);
+		if(!user){
+			throw new BadRequestException('An User with the given id does not exist')
+		}
 	}
 
 	async uploadImage(userId: string, filename: string, description: string) {
