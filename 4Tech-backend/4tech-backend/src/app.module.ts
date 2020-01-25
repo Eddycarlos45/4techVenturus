@@ -14,6 +14,7 @@ import { UserSchema } from './domain/schemas/user.schema';
 import { UserActivityController } from './controllers/user-activity/user-activity.controller';
 import { UserActivitySchema } from './domain/schemas/user-activity.schema';
 import { UserActivityService } from './services/user-activity/user-activity.service';
+import { UserActivityRepository } from './repositories/user-activity-repository/user-activity.repository';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { UserActivityService } from './services/user-activity/user-activity.serv
       }),
   ],
   controllers: [AppController, UserController, AuthController, UserActivityController],
-  providers: [AppService, UserService, UserRepositoryService, AuthService, JwtStrategy,UserActivityService],
+  providers: [AppService, UserService, UserRepositoryService, AuthService, 
+    JwtStrategy,UserActivityService,UserActivityRepository],
 })
 export class AppModule { }
