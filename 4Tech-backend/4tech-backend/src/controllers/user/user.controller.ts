@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, UseGuards, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, UseGuards, Put, Param } from '@nestjs/common';
 import { UserService } from 'src/services/user/user.service';
 import { UserViewModel } from 'src/domain/user.viewmodel';
 import { AuthGuard } from '@nestjs/passport';
@@ -18,8 +18,10 @@ export class UserController {
 	criarUsuarios(@Body() newUser: UserViewModel) {
 		return this.userService.createNewUser(newUser);
 	}
-	// @Put()
-	// updateUsuario(@Body() newUser:UserViewModel){
-	//     return this.userService.updateUser(newUser);
-	// }
+	@Put()
+	updateUsuario(
+		@Param('id') userId: string,
+		@Body() newUser: UserViewModel) {
+		return this.userService.updateUser(userId, newUser);
+	}
 }

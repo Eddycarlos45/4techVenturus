@@ -1,4 +1,4 @@
-import { Controller, UseGuards, Post, UploadedFile, Body, UseInterceptors } from '@nestjs/common';
+import { Controller, UseGuards, Post, UploadedFile, Body, UseInterceptors, Get, Param } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport'
 import { diskStorage } from 'multer'
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -8,23 +8,31 @@ import { UserActivityService } from 'src/services/user-activity/user-activity.se
 @Controller('user-activity')
 export class UserActivityController {
 
-    constructor(private readonly userActivityService: UserActivityService){
+	constructor(private readonly userActivityService: UserActivityService) {
 
-    }
+	}
 
-    @Post('upload')
-    @UseInterceptors(
-        FileInterceptor('image', {
-            storage: diskStorage({
-                destination: '../images/',
-            }),
-        }),
-    )
-    postImage(
-        @UploadedFile() file,
-        @Body('userId') userId: string,
-        @Body('description') description: string,
-    ) {
-        return this.userActivityService.uploadImage(userId,file.filename,description);
-    }
+	@Get(':index')
+	getRecentImages(
+		@Param('index') index: string) {
+		console.log(index);
+		return this.userActivityService.getRecentUploads(index);
+	}
+
+	@Post('upload')
+	@UseInterceptors(
+		FileInterceptor('image', {
+			storage: diskStorage({
+				destination: '../images/',
+				filename: (req, file, callback) => { callback(null, file.originalname) },
+			}),
+		}),
+	)
+	postImage(
+		@UploadedFile() file,
+		@Body('userId') userId: string,
+		@Body('description') description: string,
+	) {
+		return this.userActivityService.uploadImage(userId, file.originalname, description);
+	}
 }

@@ -26,8 +26,7 @@ export class UserRepositoryService {
 		// this.db.push(newUser);
 		// return 'User sucessfully added';
 	}
-	updateUser(newUser: UserViewModel) {
-		// this.db.push(newUser);
-		// return 'User update';
+	updateUser(userId: string, newUser: UserViewModel) {
+		const findId = this.getById(userId);
 	}
 }
