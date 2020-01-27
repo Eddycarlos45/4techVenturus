@@ -29,7 +29,7 @@ export class UserRepositoryService {
 			.lean();
 	}
 	async createUser(newUser: UserViewModel) {
-		const user = this.userCollection(newUser);
+		const user = new this.userCollection(newUser);
 		return await user.save();
 	}
 	async updateUser(updateUser: UserViewModel) {

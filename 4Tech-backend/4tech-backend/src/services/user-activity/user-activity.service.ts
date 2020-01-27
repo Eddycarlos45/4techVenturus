@@ -43,7 +43,7 @@ export class UserActivityService {
 			userActivity.likes.push(user._id.toString());
 		}
 		const updateUserActivity = await this.userActivityRepository.update(userActivity);
-		this.websocketGateway.notifyOnlike(userActivity._id, userActivity.userId);
+		this.websocketGateway.notifyOnlike(userActivity.userId, userActivity.userId);
 
 		return updateUserActivity;
 	}
