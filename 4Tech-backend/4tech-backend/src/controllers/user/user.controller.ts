@@ -11,15 +11,19 @@ export class UserController {
 	}
 	@UseGuards(AuthGuard('jwt'))
 	@Get()
-	retornarUsuario() {
+	returnUser() {
 		return this.userService.getUsers();
 	}
 	@Post()
-	criarUsuarios(@Body() newUser: UserViewModel) {
+	createUser(@Body() newUser: UserViewModel) {
 		return this.userService.createNewUser(newUser);
 	}
 	@Put()
-	updateUsuario(@Body() updateUser: UserViewModel) {
+	updateUser(@Body() updateUser: UserViewModel) {
 		return this.userService.updateUser(updateUser);
+	}
+	@Delete()
+	deleteUser(@Body() deleteUser: UserViewModel){
+		return this.userService.deleteUser(deleteUser);
 	}
 }

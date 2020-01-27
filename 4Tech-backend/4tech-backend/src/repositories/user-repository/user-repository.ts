@@ -16,11 +16,13 @@ export class UserRepositoryService {
 			.findOne({ _id: id })
 			.lean();
 	}
-	async getByCredentials(userLoginFromViewModel: string, passwordFromViewModel: string){
+	async getByCredentials(userLoginFromViewModel: string, passwordFromViewModel: string) {
 		return await this.userCollection
-		.findOne({userLogin:userLoginFromViewModel,
-		password: passwordFromViewModel})
-		.lean();
+			.findOne({
+				userLogin: userLoginFromViewModel,
+				password: passwordFromViewModel
+			})
+			.lean();
 	}
 	async getUsers(): Promise<User[]> {
 		return await this.userCollection
@@ -37,6 +39,12 @@ export class UserRepositoryService {
 			{ _id: updateUser.userId },
 			updateUser,
 			{ new: true });
-			return await update.save();
+		return await update.save();
+	}
+
+	async deleteUser(deleteUser: UserViewModel) {
+		const del = await this.userCollection.findOneAndDelete(
+			{ _id: deleteUser.userId });
+			return 'Successfully Deleted';
 	}
 }

@@ -9,7 +9,6 @@ import { UserActivityDto } from 'src/domain/dto/user-activity.dto';
 @Injectable()
 export class UserService {
 
-
 	constructor(readonly userRepository: UserRepositoryService,
 		readonly userActivityDto: UserActivityDto) {
 
@@ -19,7 +18,7 @@ export class UserService {
 		const user = await this.userRepository.getById(updateUser.userId);
 		if (!user) {
 			throw new BadRequestException('An User with the given id does not exist')
-		} 
+		}
 		const update = this.userRepository.updateUser(updateUser);
 		return update;
 	}
@@ -38,6 +37,15 @@ export class UserService {
 		}
 
 		return this.userRepository.createUser(newUser);
+	}
+
+	async deleteUser(deleteUser: UserViewModel) {
+		const user = await this.userRepository.getById(deleteUser.userId);
+		if (!user) {
+			throw new BadRequestException('An User with the given id does not exist')
+		}
+		const del = this.userRepository.deleteUser(deleteUser);
+		return del;
 	}
 
 	async attemptLogin(login: LoginViewModel) {
