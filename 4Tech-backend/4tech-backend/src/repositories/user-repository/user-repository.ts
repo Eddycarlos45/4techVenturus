@@ -5,6 +5,7 @@ import { Model } from 'mongoose';
 import { User } from 'src/domain/schemas/user.schema';
 @Injectable()
 export class UserRepositoryService {
+
 	constructor(
 		@InjectModel('User') private readonly userCollection: Model<User>) {
 
@@ -30,11 +31,12 @@ export class UserRepositoryService {
 	async createUser(newUser: UserViewModel) {
 		const user = this.userCollection(newUser);
 		return await user.save();
-		// this.db.push(newUser);
-		// return 'User sucessfully added';
 	}
-	// async updateUser(newUser: UserViewModel) {
-	// 	const user = this.userCollection(newUser);
-	// 	return await user.save();
-	// }
+	async updateUser(updateUser: UserViewModel) {
+		const update = await this.userCollection.findOneAndUpdate(
+			{ _id: updateUser.userId },
+			updateUser,
+			{ new: true });
+			return await update.save();
+	}
 }

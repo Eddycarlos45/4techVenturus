@@ -15,14 +15,14 @@ export class UserService {
 
 	}
 
-	// async updateUser(userId: string, newUser: UserViewModel) {
-	// 	const id = Model.findOneAndUpdate(
-	// 		userId,
-	// 		newUser,
-	// 		{ new: true }
-	// 	);
-	// 	return this.userRepository.updateUser(newUser);
-	// }
+	async updateUser(updateUser: UserViewModel) {
+		const user = await this.userRepository.getById(updateUser.userId);
+		if (!user) {
+			throw new BadRequestException('An User with the given id does not exist')
+		} 
+		const update = this.userRepository.updateUser(updateUser);
+		return update;
+	}
 
 	getUsers() {
 		return this.userRepository.getUsers();
