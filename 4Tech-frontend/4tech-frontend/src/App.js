@@ -7,13 +7,14 @@ import {
   Route,
   Redirect
 } from 'react-router-dom';
+import Timeline from './containers/Timeline/Timeline';
 
 function App() {
   return (
     <Router>
       <Switch>
         <Route exact path="/" component={Login} />
-        <Route path="/timeline" component={Login} />
+        <Route path="/timeline" component={Timeline} />
         <Redirect to="/" />
       </Switch>
     </Router>

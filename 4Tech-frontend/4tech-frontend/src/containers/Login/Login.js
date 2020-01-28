@@ -31,7 +31,6 @@ const Login = () => {
 		if (response.status >= 200 && response.status < 300) {
 			history.push('/timeline');
 		}
-		console.log(response);
 	}
 
 	const renderLogin = () => {
