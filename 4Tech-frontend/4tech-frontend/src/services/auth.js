@@ -7,8 +7,9 @@ export const login = async (userLogin, password) => {
 			password
 		});
 		if (response.status >= 200 && response.status < 300) {
-			localStorage.setItem('token', response.data.acess_token);
-			localStorage.setItem('userId', response.data._id);
+			console.log(response);
+			localStorage.setItem('token', response.data.access_token);
+			localStorage.setItem('userId', response.data.userId);
 			return response;
 		}
 	} catch (e) {
