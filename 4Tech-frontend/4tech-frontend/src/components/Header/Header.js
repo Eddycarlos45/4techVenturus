@@ -1,12 +1,16 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
+import { logout } from '../../services/auth';
 import { AppBar, Container, Toolbar, Typography, IconButton } from '@material-ui/core'
 import { ExitToApp } from "@material-ui/icons";
 import "../Header/Header.js";
 
 const Header = () => {
+	const history = useHistory();
 
 	const onLogout = () => {
-
+		logout();
+		history.push('/');
 	};
 
 	return (
