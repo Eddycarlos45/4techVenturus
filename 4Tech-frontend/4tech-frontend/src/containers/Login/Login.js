@@ -1,8 +1,8 @@
 import React, { useState, Fragment } from 'react';
-import { useHistory } from 'react-dom';
+import { useHistory } from 'react-router-dom';
 
 import { user } from '../../services/user';
-import { login } from '../../services/auth'
+import { login } from '../../services/auth';
 
 import { Button, TextField, Grid, Paper, Typography } from '@material-ui/core';
 
@@ -22,6 +22,7 @@ const Login = () => {
 	const onRegister = async (event) => {
 		event.preventDefault();
 		const response = await user.register(userLogin, fullName, password);
+		console.log(response);
 	};
 
 	const onLogin = async (event) => {
@@ -30,6 +31,7 @@ const Login = () => {
 		if (response.status >= 200 && response.status < 300) {
 			history.push('/timeline');
 		}
+		console.log(response);
 	}
 
 	const renderLogin = () => {
@@ -94,7 +96,7 @@ const Login = () => {
 					<form onSubmit={isLogin ? onLogin : onRegister} >
 						<Typography variant="h6">
 							4T Insta
-            </Typography>
+                        </Typography>
 						{isLogin ? renderLogin() : renderRegister()}
 					</form>
 				</Paper>
